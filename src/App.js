@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+
+import passwordGenerator from "./password";
 
 function App() {
+  const [length, setLength] = useState(0);
+  const [password, setPassword] = useState("");
+
+  const handleClick = () => {
+    setPassword(passwordGenerator(length));
+  };
+  const handleChange = (e) => {
+    e.preventDefault();
+    setLength(e.target.value);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="number"
+        min={0}
+        max={100}
+        value={length}
+        onChange={handleChange}
+      ></input>
+      <button onClick={handleClick}>Generate Password</button>
+      {password && <h3>{password}</h3>}
     </div>
   );
 }
